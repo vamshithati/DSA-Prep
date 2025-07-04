@@ -170,3 +170,98 @@ JavaScript Array Methods: I reinforced the use of basic JavaScript array manipul
 
 Looking Forward:
 Feeling more confident with array manipulations and excited to tackle new data structures and algorithms on Day 3!
+
+
+
+# 100 Days of DSA Prep - Day 3
+
+## Arrays - More In-place Manipulation and Counting
+
+Day 3 continued my journey with arrays, focusing on problems that required careful in-place modifications and efficient counting strategies. I tackled two interesting LeetCode problems that helped me refine my understanding of array operations and number properties.
+
+---
+
+### Problems Solved:
+
+#### 1. LeetCode 1089: Duplicate Zeros
+
+* **Description:** Given a fixed-length integer array `arr`, I needed to duplicate each occurrence of zero, shifting the remaining elements to the right. Elements beyond the original length of the array were not to be written. This meant modifying the array in-place.
+
+
+    ```javascript
+    var duplicateZeros = function(arr) {
+        // I iterate through the array
+        for(let i = 0; i < arr.length; i++){
+            // If I find a zero
+            if( arr[i] === 0) {
+                // I use splice to insert another zero right after the current one.
+                // This shifts all subsequent elements to the right.
+                arr.splice(i, 0, 0);
+                // Since the array's length increased, I remove the last element
+                // to maintain the original fixed length constraint.
+                arr.pop();
+                // I increment 'i' again to skip the newly inserted zero.
+                // This is crucial to avoid an infinite loop (re-processing the new zero)
+                // and to ensure I don't skip the element that was originally next.
+                i++;
+            }
+        }
+    };
+    ```
+
+* **Explanation:**
+    My approach for `Duplicate Zeros` involves iterating through the array and, whenever a zero is encountered, using `splice(i, 0, 0)` to insert another zero at the current position. This operation shifts all subsequent elements to the right. To maintain the fixed length of the array, I immediately `pop()` the last element. A critical part of my solution is `i++` after the `splice`. This ensures that I skip over the newly inserted zero, preventing it from being processed again (which would lead to an infinite loop or incorrect duplicates) and correctly moving to the next *original* element. While this solution is concise, I recognize that `splice` and `pop` operations can be costly on large arrays as they involve shifting elements.
+
+* **Time Complexity:** O(N^2) - In the worst case (e.g., an array full of zeros), `splice` and `pop` operations can take O(N) time each, and these are performed within a loop that runs up to N times.
+
+* **Space Complexity:** O(1) - I modified the array in-place, using no significant extra space.
+
+
+
+#### 2. LeetCode 1295: Find Numbers with Even Number of Digits
+
+* **Description:** For this problem, I needed to count how many numbers in a given array `nums` contained an even number of digits.
+
+
+    ```javascript
+    var findNumbers = function(nums) {
+        let count = 0; // This variable will store the total count of numbers with even digits
+
+        // I iterate through each number in the input array
+        for( let i = 0; i < nums.length; i++){
+            // I convert the current number to a string to easily get its length (number of digits)
+            let res = nums[i].toString();
+            // I check if the length of the string (number of digits) is even
+            if(res.length % 2 === 0){
+                count++; // If it's even, I increment my counter
+            }
+        }
+        return count; // I return the final count
+    };
+    ```
+
+* **Explanation:**
+    My approach for `Find Numbers with Even Number of Digits` was straightforward and effective. I iterated through each number in the array. For each number, I converted it to a string using `toString()`. This allowed me to easily determine the number of digits by checking the `length` property of the string. I then used the modulo operator (`% 2 === 0`) to check if the length was even. If it was, I incremented a `count` variable, which I returned at the end. This method is simple to understand and implement.
+
+* **Time Complexity:** O(N) - I perform a single pass through the array. The `toString()` operation takes time proportional to the number of digits, which is logarithmic with respect to the number's value, but practically constant for typical integer ranges.
+
+* **Space Complexity:** O(1) - I used a constant amount of extra space for the `count` variable and temporary string conversions.
+
+
+
+### Key Takeaways from Day 3:
+
+* **In-Place Array Modification Challenges:** I experienced firsthand the complexities of modifying an array in-place while iterating over it, particularly with operations like `splice` and `pop`. It requires careful management of loop indices to avoid skipping elements or creating infinite loops. I learned that while `splice` is convenient, its performance implications (O(N) for each call) must be considered for overall time complexity.
+
+* **Alternative Approaches for In-Place:** For problems like `Duplicate Zeros`, I'm now aware that more optimized O(N) solutions often involve a two-pass approach (e.g., counting zeros first, then placing elements from the end) to minimize element shifting. This is something I'll keep in mind for future similar problems.
+
+* **Number-to-String Conversion for Digit Counting:** I found a practical way to count digits in a number by converting it to a string. This is a simple and readable method for such tasks.
+
+* **Efficiency of Modulo Operator:** Reaffirmed the utility of the modulo operator (`%`) for quickly determining properties like evenness or oddness.
+
+### Looking Forward:
+
+Day 3 was a great learning experience, especially with the nuances of in-place array manipulation. I'm excited to continue building my DSA skills on Day 4!
+
+---
+
