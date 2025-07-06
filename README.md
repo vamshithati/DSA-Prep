@@ -265,3 +265,98 @@ Day 3 was a great learning experience, especially with the nuances of in-place a
 
 ---
 
+# 100 Days of DSA Prep – Day 4
+
+## Arrays – Profit Maximization and Rotations
+
+Day 4 of my DSA journey brought more classic array problems, this time focusing on identifying optimal values and performing efficient in-place manipulations. I solved two foundational LeetCode problems that enhanced my understanding of single-pass optimizations and advanced rotation techniques.
+
+---
+
+### Problems Solved:
+
+#### 1. LeetCode 121: Best Time to Buy and Sell Stock
+
+* **Description:**  
+  I needed to determine the maximum profit I could achieve by buying and selling a stock once, given an array where each element represents the price of the stock on a given day.
+
+```javascript
+function maxProfit(prices) {
+    let buy = prices[0]; // Initialize 'buy' with the first price
+    let profit = 0;       // Initialize max profit
+
+    for (let i = 1; i < prices.length; i++) {
+        if (prices[i] < buy) {
+            // Found a better buying opportunity
+            buy = prices[i];
+        } else {
+            // Potential selling point – update max profit if higher
+            profit = Math.max(prices[i] - buy, profit);
+        }
+    }
+    return profit;
+}
+```
+
+* **Explanation:**  
+  This problem is solved with a single pass through the array. I track the lowest price seen so far with the `buy` variable. As I move through the array, if I find a higher price than `buy`, I calculate the profit and update the `profit` variable if it’s greater than the current max. This approach avoids the need for nested loops and efficiently finds the optimal solution in linear time.  
+  I initially had some in-place modification lines like `prices[0] = 0`, but these are unnecessary and have been removed for clarity and correctness.
+
+* **Time Complexity:** O(N) – Single pass through the prices array  
+* **Space Complexity:** O(1) – Constant extra space used  
+* **Link:** [LeetCode 121 Solution](#) *(optional)*
+
+---
+
+#### 2. LeetCode 189: Rotate Array
+
+* **Description:**  
+  Rotate the elements of an array to the right by `k` steps. The operation must be performed in-place with O(1) extra space.
+
+```javascript
+var rotate = function(nums, k) {
+    k = k % nums.length; // Normalize k for larger values
+
+    function reverse(start, end) {
+        while (start < end) {
+            [nums[start], nums[end]] = [nums[end], nums[start]];
+            start++;
+            end--;
+        }
+    }
+
+    reverse(0, nums.length - 1);   // Step 1: Reverse entire array
+    reverse(0, k - 1);             // Step 2: Reverse first k elements
+    reverse(k, nums.length - 1);   // Step 3: Reverse the remaining elements
+};
+```
+
+* **Explanation:**  
+  I used the "three-reversals" algorithm, which is a clever and efficient in-place method. First, I reverse the entire array to move the last `k` elements to the front in reverse order. Then, I reverse the first `k` elements and the remaining elements separately to restore their original order. This technique avoids using any extra space and keeps the logic concise and modular through a helper function.
+
+* **Time Complexity:** O(N) – Each element is involved in at most one swap  
+* **Space Complexity:** O(1) – No extra space used beyond a few variables  
+* **Link:** [LeetCode 189 Solution](#) *(optional)*
+
+---
+
+### Key Takeaways from Day 4:
+
+* **Single-Pass Optimization:**  
+  Reinforced the efficiency of scanning through arrays only once for problems like profit maximization. It's all about maintaining smart state (like `buy`) while iterating.
+
+* **In-Place Array Manipulation (Advanced):**  
+  Practiced the three-reversal technique for rotating arrays – a powerful tool for modifying arrays without using additional space.
+
+* **Understanding Algorithm Constraints:**  
+  Paying attention to space and time constraints upfront helped me choose the most efficient approach. Meeting O(1) space requirements made me more mindful of in-place algorithms.
+
+* **Importance of Helper Functions:**  
+  Abstracting the `reverse()` function made the rotation logic more readable and modular – something I plan to apply more often in future problems.
+
+---
+
+### Looking Forward:
+
+Day 4 was a solid reinforcement of array fundamentals and brought in more optimization patterns. Excited to explore more complex scenarios and data structures in the coming days!
+
